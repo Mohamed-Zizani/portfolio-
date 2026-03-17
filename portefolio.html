@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed Zizani — Portfolio BTS SIO SISR</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060810;--bg2:#0d1117;--card:#111827;--card2:#1a2332;
+  --border:rgba(230, 235, 238, 0.968);--border2:rgba(56,189,248,0.08);
+  --blue:#38bdf8;--blue2:#0ea5e9;--cyan:#06b6d4;
+  --green:#10b981;--orange:#f59e0b;--pink:#ec4899;
+  --text:#f0f6ff;--muted:#64748b;--muted2:#94a3b8;
+  --glow:rgba(56,189,248,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 80% 10%,rgba(56,189,248,0.07) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(6,182,212,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(56,189,248,0.1) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;opacity:0.35}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(6,8,16,0.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--border2)}
+.nav-brand{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--blue);letter-spacing:0.05em}
+.nav-brand span{color:var(--muted2)}
+.nav-links{display:flex;list-style:none;gap:0}
+.nav-links li button{background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:500;color:var(--muted2);padding:0.4rem 1rem;border-radius:6px;transition:all 0.2s;position:relative}
+.nav-links li button:hover{color:var(--text)}
+.nav-links li button.active{color:var(--blue);background:rgba(56,189,248,0.08)}
+.nav-links li button.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--blue);border-radius:2px}
+.burger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px}
+.burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
+.mobile-nav{display:none;position:fixed;top:60px;left:0;right:0;z-index:999;background:rgba(6,8,16,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2);padding:0.75rem;flex-direction:column;gap:0.25rem}
+.mobile-nav button{background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:0.9rem;color:var(--muted2);padding:0.7rem 1rem;text-align:left;border-radius:8px;transition:all 0.2s;width:100%}
+.mobile-nav button.active{color:var(--blue);background:rgba(56,189,248,0.08)}
+
+/* TABS */
+.tab-content{display:none;position:relative;z-index:1}
+.tab-content.active{display:block}
+.page{max-width:1080px;margin:0 auto;padding:80px 2rem 4rem}
+
+/* HERO */
+.hero{min-height:calc(100vh - 60px);display:flex;flex-direction:column;justify-content:center;padding:5rem 2rem 3rem;max-width:1080px;margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.6rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.15em;padding:0.35rem 0.85rem;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:100px;margin-bottom:2rem;width:fit-content}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero h1{font-size:clamp(2.8rem,7vw,6rem);font-weight:900;line-height:1;letter-spacing:-0.04em;margin-bottom:1.25rem}
+.hero h1 .role{display:block;background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1rem;color:var(--muted2);line-height:1.75;max-width:500px;margin-bottom:2.5rem}
+.hero-desc strong{color:var(--text)}
+.hero-btns{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:4rem}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;border-radius:8px;font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.2s;border:none}
+.btn-blue{background:var(--blue2);color:#fff}
+.btn-blue:hover{background:var(--blue);transform:translateY(-2px);box-shadow:0 8px 25px rgba(14,165,233,0.3)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding-top:2.5rem;border-top:1px solid var(--border2)}
+.stat{display:flex;flex-direction:column;gap:0.25rem}
+.stat-val{font-size:1.5rem;font-weight:800;color:var(--text)}
+.stat-label{font-size:0.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em}
+
+/* SECTION TITLES */
+.sec-tag{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--blue);letter-spacing:0.15em;padding:0.2rem 0.6rem;background:var(--glow);border:1px solid var(--border);border-radius:4px;text-transform:uppercase;margin-bottom:0.6rem;display:block;width:fit-content}
+.sec-title{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.sec-title h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.03em;color:var(--text)}
+.sec-title-line{flex:1;height:1px;background:var(--border2)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:2rem;align-items:start}
+.about-text{font-size:0.93rem;color:var(--muted2);line-height:1.8}
+.about-text strong{color:var(--text);font-weight:600}
+.about-text p{margin-bottom:1rem}
+.exp-card{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:1.25rem;margin-bottom:1rem;transition:all 0.25s;position:relative;overflow:hidden}
+.exp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--blue),var(--cyan));border-radius:0 2px 2px 0}
+.exp-card:hover{border-color:var(--border);transform:translateX(4px)}
+.exp-date{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--blue);letter-spacing:0.08em;margin-bottom:0.4rem}
+.exp-title{font-size:0.92rem;font-weight:700;margin-bottom:0.25rem}
+.exp-place{font-size:0.8rem;color:var(--muted);margin-bottom:0.6rem}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:0.3rem}
+.exp-bullets li{font-size:0.8rem;color:var(--muted2);padding-left:1rem;position:relative;line-height:1.5}
+.exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--cyan)}
+.lang-bar{margin-bottom:1rem}
+.lang-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem}
+.lang-name{font-size:0.85rem;font-weight:500}
+.lang-level{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--blue)}
+.bar-bg{height:5px;background:var(--card2);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue2),var(--blue))}
+
+/* SKILLS */
+.skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.skill-block{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:1.5rem;transition:all 0.3s}
+.skill-block:hover{border-color:var(--border);box-shadow:0 0 30px rgba(56,189,248,0.06)}
+.skill-block-icon{font-size:1.6rem;margin-bottom:0.75rem}
+.skill-block-title{font-size:0.92rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.skill-block-title::after{content:'';flex:1;height:1px;background:var(--border2)}
+.chips{display:flex;flex-wrap:wrap;gap:0.4rem}
+.chip{padding:0.28rem 0.65rem;border-radius:20px;font-size:0.74rem;font-family:'JetBrains Mono',monospace;background:var(--card2);border:1px solid var(--border2);color:var(--muted2);transition:all 0.2s}
+.chip:hover{border-color:var(--border);color:var(--text)}
+.chip.blue{border-color:rgba(56,189,248,0.3);color:var(--blue);background:rgba(56,189,248,0.06)}
+.chip.green{border-color:rgba(16,185,129,0.3);color:var(--green);background:rgba(16,185,129,0.06)}
+.chip.orange{border-color:rgba(245,158,11,0.3);color:var(--orange);background:rgba(245,158,11,0.06)}
+.skill-meter{margin-bottom:0.85rem}
+.meter-head{display:flex;justify-content:space-between;margin-bottom:0.4rem}
+.meter-name{font-size:0.82rem;font-weight:500}
+.meter-pct{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted)}
+.meter-track{height:6px;background:var(--card2);border-radius:3px;overflow:hidden}
+.meter-fill{height:100%;border-radius:3px}
+.fill-blue{background:linear-gradient(90deg,var(--blue2),var(--blue))}
+.fill-green{background:linear-gradient(90deg,#059669,var(--green))}
+.fill-orange{background:linear-gradient(90deg,#d97706,var(--orange))}
+
+/* PROJECTS */
+.proj-list{display:flex;flex-direction:column;gap:1.25rem}
+.proj-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;overflow:hidden;transition:all 0.3s}
+.proj-card:hover{border-color:rgba(56,189,248,0.3)}
+.proj-header{padding:1.5rem 1.75rem 1.25rem;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;cursor:pointer}
+.proj-left{flex:1}
+.proj-num{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.5rem}
+.proj-title{font-size:1.08rem;font-weight:700;margin-bottom:0.5rem}
+.proj-summary{font-size:0.84rem;color:var(--muted2);line-height:1.6}
+.proj-chips{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.75rem}
+.proj-toggle{flex-shrink:0;width:32px;height:32px;border-radius:8px;background:var(--card2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.25s;cursor:pointer;color:var(--muted2);font-weight:300}
+.proj-card.open .proj-toggle{background:rgba(56,189,248,0.1);border-color:var(--border);color:var(--blue);transform:rotate(45deg)}
+.proj-body{display:none;padding:0 1.75rem 1.75rem;border-top:1px solid var(--border2)}
+.proj-card.open .proj-body{display:block}
+.proj-date-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--cyan);background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:20px;padding:0.25rem 0.75rem;margin:1.25rem 0}
+.steps{display:flex;flex-direction:column;gap:0}
+.step-row{display:flex;gap:1rem;position:relative}
+.step-row:not(:last-child)::after{content:'';position:absolute;left:17px;top:36px;bottom:-8px;width:1px;background:var(--border2)}
+.step-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--blue);font-weight:700;margin-top:0.1rem}
+.step-box{background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:0.9rem 1rem;flex:1;margin-bottom:0.75rem}
+.step-title{font-size:0.86rem;font-weight:700;margin-bottom:0.3rem}
+.step-desc{font-size:0.81rem;color:var(--muted2);line-height:1.65}
+code{font-family:'JetBrains Mono',monospace;font-size:0.77rem;background:rgba(56,189,248,0.1);color:var(--blue);padding:0.1rem 0.4rem;border-radius:4px;border:1px solid rgba(56,189,248,0.15)}
+.result-box{margin-top:1.25rem;padding:0.85rem 1rem;border-radius:8px;font-size:0.82rem;color:var(--muted2)}
+.result-box strong{font-weight:600}
+
+/* DOCUMENTS */
+.docs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem}
+.doc-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;overflow:hidden;transition:all 0.3s}
+.doc-card:hover{border-color:var(--border);transform:translateY(-3px);box-shadow:0 12px 35px rgba(0,0,0,0.4)}
+.doc-banner{height:110px;display:flex;align-items:center;justify-content:center;font-size:2.8rem}
+.doc-banner.pdf-bg{background:linear-gradient(135deg,#1a0a2e,#2d1b69)}
+.doc-banner.xlsx-bg{background:linear-gradient(135deg,#0a1f0a,#0d4a2a)}
+.doc-body{padding:1.25rem}
+.doc-type{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;padding:0.2rem 0.55rem;border-radius:20px;width:fit-content;margin-bottom:0.6rem}
+.doc-type.pdf{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.3);color:#a78bfa}
+.doc-type.xlsx{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green)}
+.doc-name{font-size:0.95rem;font-weight:700;margin-bottom:0.5rem}
+.doc-desc{font-size:0.8rem;color:var(--muted2);line-height:1.6;margin-bottom:1rem}
+.dl-btn{display:inline-flex;align-items:center;gap:0.45rem;padding:0.55rem 1.1rem;border-radius:7px;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+.dl-btn.pdf-dl{background:#7c3aed;color:#fff}
+.dl-btn.pdf-dl:hover{background:#8b5cf6;box-shadow:0 6px 20px rgba(124,58,237,0.4)}
+.dl-btn.xlsx-dl{background:#065f46;color:#fff}
+.dl-btn.xlsx-dl:hover{background:var(--green);box-shadow:0 6px 20px rgba(16,185,129,0.3)}
+.e5-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.e5-table th{background:var(--card2);padding:0.65rem 0.9rem;text-align:left;font-weight:600;color:var(--muted2);border:1px solid var(--border2);font-size:0.75rem;font-family:'JetBrains Mono',monospace;letter-spacing:0.05em}
+.e5-table td{padding:0.65rem 0.9rem;border:1px solid var(--border2);vertical-align:top;line-height:1.5}
+.e5-table tr:hover td{background:rgba(56,189,248,0.02)}
+.comp-badge{display:inline-block;padding:0.18rem 0.5rem;border-radius:4px;font-size:0.71rem;font-family:'JetBrains Mono',monospace;margin:0.15rem}
+.comp-badge.c1{background:rgba(56,189,248,0.1);color:var(--blue);border:1px solid rgba(56,189,248,0.2)}
+.comp-badge.c2{background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.2)}
+.comp-badge.c3{background:rgba(245,158,11,0.1);color:var(--orange);border:1px solid rgba(245,158,11,0.2)}
+
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:1.1fr 0.9fr;gap:2rem}
+.contact-intro{font-size:0.93rem;color:var(--muted2);line-height:1.8}
+.contact-intro strong{color:var(--text)}
+.avail-box{margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:10px}
+.avail-label{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--green);letter-spacing:0.1em}
+.avail-text{font-size:0.86rem;color:var(--muted2)}
+.avail-text strong{color:var(--text)}
+.contact-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;overflow:hidden}
+.contact-item{display:flex;align-items:center;gap:0.85rem;padding:0.95rem 1.25rem;border-bottom:1px solid var(--border2);transition:background 0.2s}
+.contact-item:last-child{border-bottom:none}
+.contact-item:hover{background:var(--glow)}
+.c-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:var(--glow);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.95rem}
+.c-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.08em;margin-bottom:0.1rem}
+.c-val{font-size:0.86rem;color:var(--text);font-weight:500}
+
+/* FADE */
+.fade{opacity:0;transform:translateY(18px);transition:opacity 0.5s ease,transform 0.5s ease}
+.fade.in{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .burger{display:flex}
+  .nav-links{display:none}
+  .hero{padding:4rem 1.25rem 2rem}
+  .page{padding:80px 1.25rem 3rem}
+  .about-grid,.skills-layout,.contact-layout{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .docs-grid{grid-template-columns:1fr}
+  .proj-header{flex-wrap:wrap}
+  .e5-table{font-size:0.72rem}
+  .e5-table th,.e5-table td{padding:0.5rem 0.6rem}
+}
+@media(max-width:480px){
+  .hero h1{font-size:2.4rem}
+  .hero-stats{grid-template-columns:1fr 1fr;gap:0.75rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-brand">MZ<span>/</span>portfolio</div>
+  <ul class="nav-links" id="navLinks">
+    <li><button onclick="goTab('accueil')" class="active" id="btn-accueil">Accueil</button></li>
+    <li><button onclick="goTab('apropos')" id="btn-apropos">À propos</button></li>
+    <li><button onclick="goTab('competences')" id="btn-competences">Compétences</button></li>
+    <li><button onclick="goTab('projets')" id="btn-projets">Projets</button></li>
+    <li><button onclick="goTab('documents')" id="btn-documents">Documents</button></li>
+    <li><button onclick="goTab('contact')" id="btn-contact">Contact</button></li>
+  </ul>
+  <button class="burger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <button onclick="goTab('accueil')" id="mbtn-accueil" class="active">🏠 Accueil</button>
+  <button onclick="goTab('apropos')" id="mbtn-apropos">👤 À propos</button>
+  <button onclick="goTab('competences')" id="mbtn-competences">🛠️ Compétences</button>
+  <button onclick="goTab('projets')" id="mbtn-projets">📁 Projets</button>
+  <button onclick="goTab('documents')" id="mbtn-documents">📄 Documents</button>
+  <button onclick="goTab('contact')" id="mbtn-contact">✉️ Contact</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 1 : ACCUEIL
+══════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-accueil">
+  <div class="hero">
+    <div class="hero-eyebrow"><div class="dot"></div>Disponible pour un stage · 18 mai – 26 juin 2026</div>
+    <h1>
+      <span>Mohamed Zizani</span>
+      <span class="role">BTS SIO · SISR</span>
+    </h1>
+    <p class="hero-desc">Étudiant en 1ère année de BTS SIO option SISR au lycée Le Rebours, Paris. Passionné par les réseaux, l'infrastructure et l'administration système. Je recherche un <strong>stage de 6 semaines</strong> en environnement professionnel.</p>
+    <div class="hero-btns">
+      <button class="btn btn-blue" onclick="goTab('projets')">Voir mes projets →</button>
+      <button class="btn btn-ghost" onclick="goTab('contact')">Me contacter</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-val">2</span><span class="stat-label">STAGES</span></div>
+      <div class="stat"><span class="stat-val">3</span><span class="stat-label">PROJETS</span></div>
+      <div class="stat"><span class="stat-val">6+</span><span class="stat-label">TECH SKILLS</span></div>
+      <div class="stat"><span class="stat-val">3</span><span class="stat-label">LANGUES</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 2 : À PROPOS
+══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-apropos">
+  <div class="page">
+    <div class="sec-title">
+      <div><span class="sec-tag">Qui suis-je ?</span><h2>À propos de moi</h2></div>
+      <div class="sec-title-line"></div>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <div class="about-text fade">
+          <p><strong>Je suis <strong>Mohamed Zizani</strong>, étudiant en <strong>1ère année de BTS SIO option SISR</strong> (Solutions d'Infrastructure Systèmes et Réseaux) au lycée Le Rebours à Paris.</p>
+          <p>Après un <strong>BAC STMG</strong> au lycée Jules Verne de Sartrouville, j'ai choisi de me reconvertir vers l'informatique, domaine dans lequel j'ai rapidement trouvé une vraie passion pour les réseaux, les systèmes et le support utilisateur.</p>
+          <p>Titulaire du <strong>BAFA</strong>, j'ai aussi développé des qualités de communication, de gestion d'équipe et un sens des responsabilités au travers d'expériences variées.</p>
+        </div>
+
+        <div style="margin-top:2rem;">
+          <span class="sec-tag">Parcours chronologique</span>
+
+          <div class="exp-card fade">
+            <div class="exp-date">JUIN 2025</div>
+            <div class="exp-title">Technicien Informatique — Stage</div>
+            <div class="exp-place">📍 Lycée Saint-Geneviève, Versailles</div>
+            <ul class="exp-bullets">
+              <li>Diagnostic et résolution de problèmes matériels et logiciels</li>
+              <li>Assistance aux utilisateurs (professeurs, élèves, personnel administratif)</li>
+              <li>Participation à la maintenance du réseau local (LAN)</li>
+              <li>Gestion et mise à jour du parc informatique</li>
+            </ul>
+          </div>
+
+          <div class="exp-card fade">
+            <div class="exp-date">JUIN 2023</div>
+            <div class="exp-title">Technicien — Stage</div>
+            <div class="exp-place">📍 Service Technique, Mairie de Houilles</div>
+            <ul class="exp-bullets">
+              <li>Contrôle de différents sites techniques</li>
+              <li>Mise en œuvre de projets dans le secteur technique</li>
+              <li>Gestion du parc matériel et de la collectivité</li>
+            </ul>
+          </div>
+
+          <div class="exp-card fade">
+            <div class="exp-date">2025 – 2027 (en cours)</div>
+            <div class="exp-title">BTS SIO — Option SISR</div>
+            <div class="exp-place">📍 Lycée Le Rebours, Paris</div>
+          </div>
+
+          <div class="exp-card fade">
+            <div class="exp-date">2024 – 2025</div>
+            <div class="exp-title">BAFA — Brevet d'Aptitude aux Fonctions d'Animateur</div>
+            <div class="exp-place">📍 IFAC, Origines</div>
+          </div>
+
+          <div class="exp-card fade">
+            <div class="exp-date">2022 – 2024</div>
+            <div class="exp-title">BAC STMG — Sciences & Technologies du Management et de la Gestion</div>
+            <div class="exp-place">📍 Lycée Jules Verne, Sartrouville</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="exp-card fade" style="margin-bottom:1.25rem;">
+          <span class="sec-tag">Langues</span>
+          <div class="lang-bar">
+            <div class="lang-row"><span class="lang-name">Français</span><span class="lang-level">Natif</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="lang-bar">
+            <div class="lang-row"><span class="lang-name">Arabe</span><span class="lang-level">B1</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width:55%"></div></div>
+          </div>
+          <div class="lang-bar">
+            <div class="lang-row"><span class="lang-name">Anglais</span><span class="lang-level">A2</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width:28%"></div></div>
+          </div>
+          <div class="lang-bar" style="margin-bottom:0">
+            <div class="lang-row"><span class="lang-name">Espagnol</span><span class="lang-level">A2</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width:28%"></div></div>
+          </div>
+        </div>
+
+        <div class="exp-card fade" style="margin-bottom:1.25rem;">
+          <span class="sec-tag">Soft Skills</span>
+          <div class="chips">
+            <span class="chip green">Travail d'équipe</span>
+            <span class="chip green">Communication</span>
+            <span class="chip green">Gestion du temps</span>
+            <span class="chip green">Sens des responsabilités</span>
+            <span class="chip green">Adaptabilité</span>
+            <span class="chip green">Curiosité technique</span>
+          </div>
+        </div>
+
+        <div class="exp-card fade">
+          <span class="sec-tag">Engagements & autres expériences</span>
+          <ul class="exp-bullets" style="margin-top:0.5rem;">
+            <li><strong>Animateur</strong> — Centre de loisirs, Mairie de Houilles. Encadrement d'enfants 6–12 ans, activités sportives et culturelles.</li>
+            <li><strong>Bénévole</strong> — Croix Rouge, Sartrouville. Accueil, conseil clients, tri et mise en rayon des dons.</li>
+            <li><strong>Agent de service spécialisé</strong> — EHPAD Stéphanie, Sartrouville. Service des repas et entretien.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 3 : COMPÉTENCES
+══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-competences">
+  <div class="page">
+    <div class="sec-title">
+      <div><span class="sec-tag">Savoir-faire technique</span><h2>Mes compétences</h2></div>
+      <div class="sec-title-line"></div>
+    </div>
+
+    <div class="skills-layout">
+
+      <div class="skill-block fade">
+        <div class="skill-block-icon">🌐</div>
+        <div class="skill-block-title">Réseaux & Infrastructure</div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">Schéma réseau</span><span class="meter-pct">75%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-blue" style="width:75%"></div></div>
+        </div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">Configuration Switch</span><span class="meter-pct">70%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-blue" style="width:70%"></div></div>
+        </div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">VLAN</span><span class="meter-pct">65%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-blue" style="width:65%"></div></div>
+        </div>
+        <div class="skill-meter" style="margin-bottom:0">
+          <div class="meter-head"><span class="meter-name">TCP/IP</span><span class="meter-pct">60%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-blue" style="width:60%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-block fade">
+        <div class="skill-block-icon">🖥️</div>
+        <div class="skill-block-title">Systèmes & Administration</div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">Support utilisateur</span><span class="meter-pct">85%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-green" style="width:85%"></div></div>
+        </div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">Windows (admin)</span><span class="meter-pct">72%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-green" style="width:72%"></div></div>
+        </div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">Script Shell</span><span class="meter-pct">60%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-green" style="width:60%"></div></div>
+        </div>
+        <div class="skill-meter" style="margin-bottom:0">
+          <div class="meter-head"><span class="meter-name">Linux (bases)</span><span class="meter-pct">45%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-green" style="width:45%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-block fade">
+        <div class="skill-block-icon">💾</div>
+        <div class="skill-block-title">Développement & Bases de données</div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">SQL / MySQL</span><span class="meter-pct">65%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-orange" style="width:65%"></div></div>
+        </div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">WordPress / PHP</span><span class="meter-pct">55%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-orange" style="width:55%"></div></div>
+        </div>
+        <div class="skill-meter">
+          <div class="meter-head"><span class="meter-name">Python (bases)</span><span class="meter-pct">45%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-orange" style="width:45%"></div></div>
+        </div>
+        <div class="skill-meter" style="margin-bottom:0">
+          <div class="meter-head"><span class="meter-name">HTML/CSS (notions)</span><span class="meter-pct">40%</span></div>
+          <div class="meter-track"><div class="meter-fill fill-orange" style="width:40%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-block fade">
+        <div class="skill-block-icon">🔧</div>
+        <div class="skill-block-title">Outils & Cybersécurité</div>
+        <div class="chips">
+          <span class="chip blue">FileZilla (FTP)</span>
+          <span class="chip blue">WAMP / XAMPP</span>
+          <span class="chip blue">Apache</span>
+          <span class="chip blue">OVH</span>
+          <span class="chip">Word · Excel</span>
+          <span class="chip">PowerPoint</span>
+          <span class="chip orange">MOOC Cyber 2025</span>
+          <span class="chip orange">Sensibilisation ANSSI</span>
+          <span class="chip green">Maintenance PC</span>
+          <span class="chip green">Diagnostic matériel</span>
+          <span class="chip green">Gestion parc info.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:2rem;">
+      <span class="sec-tag">Certifications & formations</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.85rem;margin-top:0.75rem;">
+        <div class="exp-card fade" style="margin-bottom:0"><div class="exp-date">2025</div><div class="exp-title">Certifications MOOC</div><div class="exp-place">Cybersécurité · Réseaux</div></div>
+        <div class="exp-card fade" style="margin-bottom:0"><div class="exp-date">2024–2025</div><div class="exp-title">BAFA</div><div class="exp-place">IFAC, Origines</div></div>
+        <div class="exp-card fade" style="margin-bottom:0"><div class="exp-date">2025–2027</div><div class="exp-title">BTS SIO SISR (en cours)</div><div class="exp-place">Lycée Le Rebours, Paris</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 4 : PROJETS
+══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-projets">
+  <div class="page">
+    <div class="sec-title">
+      <div><span class="sec-tag">Réalisations techniques</span><h2>Mes projets</h2></div>
+      <div class="sec-title-line"></div>
+    </div>
+
+    <div class="proj-list">
+
+      <!-- PROJET 1 -->
+      <div class="proj-card fade" id="proj1">
+        <div class="proj-header" onclick="toggleProj('proj1')">
+          <div class="proj-left">
+            <div class="proj-num">PROJET · 01 · 18/02/2025</div>
+            <div class="proj-title">🌐 Installation WordPress sur OVH</div>
+            <p class="proj-summary">Déploiement complet d'un site WordPress sur hébergement OVH : transfert FTP, création de la base de données MySQL, configuration et mise en ligne via le navigateur.</p>
+            <div class="proj-chips">
+              <span class="chip blue">WordPress</span><span class="chip blue">OVH</span><span class="chip blue">FileZilla</span><span class="chip">MySQL</span><span class="chip">FTP</span><span class="chip">PHP</span>
+            </div>
+          </div>
+          <div class="proj-toggle">+</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-date-badge">📅 Réalisé le 18 février 2025</div>
+          <p style="font-size:0.85rem;color:var(--muted2);line-height:1.7;margin-bottom:1.25rem;"><strong style="color:var(--text)">Objectif :</strong> Mettre en ligne un site WordPress sur l'hébergement mutualisé OVH, en utilisant un nom de domaine fourni par l'établissement, un client FTP et l'interface d'administration OVH.</p>
+          <div class="steps">
+            <div class="step-row">
+              <div class="step-num">01</div>
+              <div class="step-box">
+                <div class="step-title">Téléchargement de WordPress</div>
+                <div class="step-desc">Récupération de la dernière version depuis <code>wordpress.org</code>. Décompression du dossier en local sur le poste de travail.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">02</div>
+              <div class="step-box">
+                <div class="step-title">Connexion FTP et transfert des fichiers</div>
+                <div class="step-desc">Installation de <strong>FileZilla</strong>. Connexion au serveur OVH avec les identifiants FTP (hôte, utilisateur, mot de passe). Ouverture du dossier <code>www/</code> et transfert de l'intégralité des fichiers WordPress vers le serveur distant.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">03</div>
+              <div class="step-box">
+                <div class="step-title">Création de la base de données MySQL</div>
+                <div class="step-desc">Dans l'interface OVH : <code>Web Cloud → Hébergement → Bases de données</code>. Création d'une nouvelle base, définition d'un utilisateur et d'un mot de passe. Note des infos : nom de la BDD, identifiant, mot de passe, serveur SQL.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">04</div>
+              <div class="step-box">
+                <div class="step-title">Finalisation via le navigateur</div>
+                <div class="step-desc">Accès au nom de domaine dans un navigateur. L'assistant WordPress se lance automatiquement. Renseignement des informations de connexion BDD, création du compte administrateur. Site en ligne ✅</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-box" style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);">
+            <strong style="color:var(--green)">Compétences E5 mobilisées :</strong> Développer la présence en ligne de l'organisation · Mettre à disposition un service informatique
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJET 2 -->
+      <div class="proj-card fade" id="proj2">
+        <div class="proj-header" onclick="toggleProj('proj2')">
+          <div class="proj-left">
+            <div class="proj-num">PROJET · 02 · 13/01/2025</div>
+            <div class="proj-title">📡 Veille Technologique</div>
+            <p class="proj-summary">Réalisation d'une veille active sur les évolutions du secteur IT : cybersécurité, réseaux, cloud computing et nouvelles tendances. Synthèse documentée et restituée.</p>
+            <div class="proj-chips">
+              <span class="chip green">Cybersécurité</span><span class="chip green">Réseaux</span><span class="chip green">Cloud</span><span class="chip">ANSSI</span><span class="chip">LeMagIT</span><span class="chip">Analyse</span>
+            </div>
+          </div>
+          <div class="proj-toggle">+</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-date-badge">📅 Réalisée le 13 janvier 2025</div>
+          <p style="font-size:0.85rem;color:var(--muted2);line-height:1.7;margin-bottom:1.25rem;"><strong style="color:var(--text)">Objectif :</strong> Mettre en place une démarche de veille informationnelle structurée pour rester informé des évolutions technologiques du secteur IT, en lien avec les compétences BTS SIO SISR.</p>
+          <div class="steps">
+            <div class="step-row">
+              <div class="step-num">01</div>
+              <div class="step-box">
+                <div class="step-title">Définition du périmètre de veille</div>
+                <div class="step-desc">Identification des thématiques à surveiller : cybersécurité, protocoles réseau, virtualisation, cloud computing, nouvelles architectures système (Zero Trust, SD-WAN).</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">02</div>
+              <div class="step-box">
+                <div class="step-title">Sélection des sources fiables</div>
+                <div class="step-desc">Mise en place d'un système de collecte via des sources spécialisées : <code>LeMagIT</code>, <code>ZDNet.fr</code>, <code>ANSSI.fr</code>, flux RSS, newsletters techniques et blogs professionnels reconnus.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">03</div>
+              <div class="step-box">
+                <div class="step-title">Analyse et synthèse des informations</div>
+                <div class="step-desc">Lecture critique et tri des articles. Rédaction de fiches de synthèse sur des sujets clés : <code>Zero Trust</code>, montée des ransomwares, <code>Wi-Fi 6E</code>, IA dans l'administration réseau, évolutions cloud (Azure, AWS).</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">04</div>
+              <div class="step-box">
+                <div class="step-title">Restitution documentée</div>
+                <div class="step-desc">Présentation sous forme de rapport structuré : synthèse des tendances, impacts sur le métier de technicien SISR, sources référencées. Dépôt dans le dossier de réalisations professionnelles E5.</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-box" style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);">
+            <strong style="color:var(--green)">Compétence E5 mobilisée :</strong> Organiser son développement professionnel · Mettre en œuvre des outils et stratégies de veille informationnelle
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJET 3 -->
+      <div class="proj-card fade" id="proj3">
+        <div class="proj-header" onclick="toggleProj('proj3')">
+          <div class="proj-left">
+            <div class="proj-num">PROJET · 03</div>
+            <div class="proj-title">🔒 Partage d'un site web en intranet</div>
+            <p class="proj-summary">Mise en place d'un site web accessible uniquement depuis le réseau local d'une organisation via un serveur Apache/WAMP, sans exposition sur Internet.</p>
+            <div class="proj-chips">
+              <span class="chip orange">Apache</span><span class="chip orange">WAMP/XAMPP</span><span class="chip orange">Réseau local</span><span class="chip">IP privée</span><span class="chip">DNS local</span><span class="chip">Pare-feu</span>
+            </div>
+          </div>
+          <div class="proj-toggle">+</div>
+        </div>
+        <div class="proj-body">
+          <p style="font-size:0.85rem;color:var(--muted2);line-height:1.7;margin:1.25rem 0;"><strong style="color:var(--text)">Objectif :</strong> Rendre un site web accessible uniquement en interne (réseau LAN de l'organisation), sans le publier sur Internet. Utile pour des portails RH, outils internes ou documentation technique d'entreprise.</p>
+          <div class="steps">
+            <div class="step-row">
+              <div class="step-num">01</div>
+              <div class="step-box">
+                <div class="step-title">Installation d'un serveur web local</div>
+                <div class="step-desc">Installation de <code>WAMP</code> (Windows) ou <code>XAMPP</code> sur la machine serveur. Ces solutions embarquent Apache, PHP et MySQL. Démarrage des services Apache et MySQL depuis l'interface.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">02</div>
+              <div class="step-box">
+                <div class="step-title">Déploiement des fichiers du site</div>
+                <div class="step-desc">Copie des fichiers du site dans le dossier <code>www/</code> (WAMP) ou <code>htdocs/</code> (XAMPP). Vérification du bon fonctionnement local via <code>http://localhost</code> dans le navigateur.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">03</div>
+              <div class="step-box">
+                <div class="step-title">Récupération de l'adresse IP locale</div>
+                <div class="step-desc">Lancer <code>ipconfig</code> dans l'invite de commandes Windows pour obtenir l'adresse IP privée du serveur (ex : <code>192.168.1.50</code>). C'est cette adresse que les autres postes utiliseront.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">04</div>
+              <div class="step-box">
+                <div class="step-title">Configuration du pare-feu Windows</div>
+                <div class="step-desc">Autoriser les connexions entrantes sur le <code>port 80</code> (HTTP) pour Apache dans le pare-feu Windows Defender. Sans cette règle, les autres postes du réseau ne peuvent pas atteindre le serveur.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">05</div>
+              <div class="step-box">
+                <div class="step-title">Accès depuis les autres postes du réseau</div>
+                <div class="step-desc">Les utilisateurs du LAN accèdent au site via <code>http://192.168.1.50</code> (IP du serveur) dans leur navigateur. Option avancée : modifier le fichier <code>hosts</code> des postes clients pour créer l'adresse <code>http://intranet.local</code>.</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-box" style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);">
+            <strong style="color:var(--orange)">Compétences mobilisées :</strong> Mettre à disposition un service informatique · Gérer le patrimoine informatique · Support réseau local
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 5 : DOCUMENTS
+══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-documents">
+  <div class="page">
+    <div class="sec-title">
+      <div><span class="sec-tag">Fichiers à télécharger</span><h2>Mes documents</h2></div>
+      <div class="sec-title-line"></div>
+    </div>
+
+    <div class="docs-grid">
+      <div class="doc-card fade">
+        <div class="doc-banner pdf-bg">📄</div>
+        <div class="doc-body">
+          <div class="doc-type pdf">PDF</div>
+          <div class="doc-name">Curriculum Vitae</div>
+          <p class="doc-desc">CV complet : formation BAC STMG → BTS SIO SISR, 2 expériences en stage technicien, compétences réseau et support, certifications MOOC 2025.</p>
+          <a href="portefolio.pdf" download class="dl-btn pdf-dl">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger le CV
+          </a>
+        </div>
+      </div>
+      <div class="doc-card fade">
+        <div class="doc-banner xlsx-bg">📊</div>
+        <div class="doc-body">
+          <div class="doc-type xlsx">XLSX</div>
+          <div class="doc-name">Tableau de Synthèse E5</div>
+          <p class="doc-desc">Annexe 8-1 BTS SIO Session 2025 remplie avec mes deux réalisations : Veille Technologique (13/01/25) et Installation WordPress OVH (18/02/25).</p>
+          <a href="tableau_synthese_rempli.xlsx" download class="dl-btn xlsx-dl">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger le tableau
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <span class="sec-tag">Récapitulatif Tableau de Synthèse — Épreuve E5</span>
+    <div style="overflow-x:auto;margin-top:0.75rem;border-radius:12px;border:1px solid var(--border2);">
+      <table class="e5-table">
+        <thead>
+          <tr>
+            <th>Réalisation professionnelle</th>
+            <th>Période</th>
+            <th>Compétences mobilisées</th>
+            <th>Documents associés</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Veille Technologique</strong></td>
+            <td><span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--blue)">13/01/2025</span></td>
+            <td><span class="comp-badge c2">Organiser son développement professionnel</span><span class="comp-badge c2">Veille informationnelle</span></td>
+            <td style="font-size:0.78rem;color:var(--muted2)">Fiche de veille · Sources (LeMagIT, ZDNet, ANSSI) · Synthèse rédigée</td>
+          </tr>
+          <tr>
+            <td><strong>Installation WordPress sur OVH</strong></td>
+            <td><span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--blue)">18/02/2025</span></td>
+            <td><span class="comp-badge c1">Présence en ligne</span><span class="comp-badge c3">Mettre à disposition un service</span></td>
+            <td style="font-size:0.78rem;color:var(--muted2)">Procédure FTP · Captures FileZilla · BDD MySQL · Site en ligne</td>
+          </tr>
+          <tr>
+            <td><strong>Partage site web en Intranet</strong></td>
+            <td><span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--muted)">En cours</span></td>
+            <td><span class="comp-badge c3">Déployer un service</span><span class="comp-badge c1">Gérer le patrimoine informatique</span></td>
+            <td style="font-size:0.78rem;color:var(--muted2)">Procédure WAMP · Config pare-feu · Test réseau LAN</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 6 : CONTACT
+══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-contact">
+  <div class="page">
+    <div class="sec-title">
+      <div><span class="sec-tag">Travaillons ensemble</span><h2>Me contacter</h2></div>
+      <div class="sec-title-line"></div>
+    </div>
+
+    <div class="contact-layout">
+      <div class="fade">
+        <p class="contact-intro">Je suis à la recherche d'un <strong>stage de 6 semaines</strong> dans le domaine des <strong>réseaux, de l'infrastructure ou du support informatique</strong>, pour valider ma 1ère année de BTS SIO SISR.</p>
+        <p class="contact-intro" style="margin-top:0.85rem;">N'hésitez pas à me contacter pour discuter d'une <strong>opportunité de stage</strong>. Je suis sérieux, motivé et prêt à m'investir pleinement.</p>
+
+        <div class="avail-box">
+          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.35rem;">
+            <div class="dot" style="width:8px;height:8px;background:var(--green);border-radius:50%;animation:blink 1.8s infinite;"></div>
+            <span class="avail-label">DISPONIBILITÉ STAGE</span>
+          </div>
+          <p class="avail-text"><strong>18 mai – 26 juin 2026</strong> · 6 semaines</p>
+          <p class="avail-text" style="margin-top:0.25rem;">Secteur : <strong>Île-de-France</strong> · mobilité possible</p>
+        </div>
+
+        <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--card);border:1px solid var(--border2);border-radius:10px;">
+          <span class="sec-tag" style="margin-bottom:0.75rem;">Ce que je recherche</span>
+          <div class="chips">
+            <span class="chip blue">Support informatique</span>
+            <span class="chip blue">Administration réseau</span>
+            <span class="chip blue">Infrastructure système</span>
+            <span class="chip green">Gestion parc informatique</span>
+            <span class="chip green">Technicien helpdesk</span>
+            <span class="chip orange">Installation & déploiement</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-card fade">
+        <div class="contact-item">
+          <div class="c-icon">📞</div>
+          <div><div class="c-label">TÉLÉPHONE</div><div class="c-val">06 65 72 44 73</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="c-icon">✉️</div>
+          <div><div class="c-label">EMAIL</div><div class="c-val">mohamedzizani785@icloud.com</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="c-icon">📍</div>
+          <div><div class="c-label">ADRESSE</div><div class="c-val">140 Bd de Bezons, Sartrouville (78)</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="c-icon">🎓</div>
+          <div><div class="c-label">FORMATION</div><div class="c-val">BTS SIO SISR · Lycée Le Rebours</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="c-icon">📅</div>
+          <div><div class="c-label">STAGE SOUHAITÉ</div><div class="c-val">18 mai – 26 juin 2026</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCRIPT ══ -->
+<script>
+const TABS=['accueil','apropos','competences','projets','documents','contact'];
+
+function goTab(id){
+  TABS.forEach(t=>{
+    document.getElementById('tab-'+t).classList.remove('active');
+    const b=document.getElementById('btn-'+t);
+    const mb=document.getElementById('mbtn-'+t);
+    if(b)b.classList.remove('active');
+    if(mb)mb.classList.remove('active');
+  });
+  document.getElementById('tab-'+id).classList.add('active');
+  document.getElementById('btn-'+id)?.classList.add('active');
+  document.getElementById('mbtn-'+id)?.classList.add('active');
+  document.getElementById('mobileNav').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(triggerFades,60);
+}
+
+function toggleMobile(){
+  const mn=document.getElementById('mobileNav');
+  mn.style.display=mn.style.display==='flex'?'none':'flex';
+}
+
+function toggleProj(id){
+  document.getElementById(id).classList.toggle('open');
+}
+
+function triggerFades(){
+  const els=document.querySelectorAll('.tab-content.active .fade');
+  els.forEach((el,i)=>{
+    el.classList.remove('in');
+    setTimeout(()=>el.classList.add('in'),i*70);
+  });
+}
+
+triggerFades();
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>768)document.getElementById('mobileNav').style.display='none';
+});
+</script>
+</body>
+</html>
